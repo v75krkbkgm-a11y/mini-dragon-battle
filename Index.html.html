@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Dragon Ascension</title>
+<style>
+:root{--gold:#ffd45a;--cyan:#55e8ff;--red:#ff5367;--panel:#101a32}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% 15%,#263b70,#090d1b 65%);color:#fff;font-family:system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+.wrap{max-width:900px;margin:auto;padding:16px}.top{display:flex;justify-content:space-between;align-items:center;gap:10px}.logo{font-weight:900;letter-spacing:1px;color:var(--gold);font-size:clamp(20px,5vw,30px);text-shadow:0 0 18px #ff9d33}.pill{background:#172440;border:1px solid #40547c;padding:8px 12px;border-radius:99px;font-size:13px}
+.arena{position:relative;overflow:hidden;border:2px solid #6176a8;border-radius:22px;background:linear-gradient(#111d3a 0%,#293b68 62%,#4c5570 63%,#20283e 100%);height:330px;margin-top:14px;box-shadow:0 18px 50px #0008}
+.sun{position:absolute;width:100px;height:100px;border-radius:50%;background:#ffcf6a;filter:blur(2px);top:32px;left:calc(50% - 50px);box-shadow:0 0 65px #ff9d43}
+.mountain{position:absolute;bottom:72px;width:0;height:0;border-left:120px solid transparent;border-right:120px solid transparent;border-bottom:145px solid #25385b}
+.m1{left:-40px}.m2{right:-55px;border-bottom-color:#344a70}.ground{position:absolute;bottom:0;height:75px;width:100%;background:linear-gradient(#59627a,#1b233b);border-top:4px solid #9ba2ac}
+.fighter{position:absolute;bottom:67px;left:20%;width:90px;height:155px;transition:transform .18s;filter:drop-shadow(0 0 10px #ffbf3f)}
+.head{position:absolute;top:5px;left:29px;width:35px;height:37px;background:#f1b887;border-radius:45%}
+.hair{position:absolute;top:-8px;left:24px;width:45px;height:38px;background:#171a28;clip-path:polygon(0 55%,10% 10%,30% 35%,45% 0,58% 35%,85% 5%,100% 70%,75% 60%,60% 100%,40% 62%,20% 100%)}
+.body{position:absolute;top:42px;left:22px;width:50px;height:65px;background:#f07b24;clip-path:polygon(20% 0,80% 0,100% 100%,0 100%);border:2px solid #ffd45a}
+.arm{position:absolute;top:48px;width:18px;height:55px;background:#f1b887;border-radius:12px}.arm.l{left:8px;transform:rotate(18deg)}.arm.r{right:5px;transform:rotate(-25deg)}
+.leg{position:absolute;top:100px;width:22px;height:54px;background:#243d91;border-radius:8px}.leg.l{left:23px;transform:rotate(8deg)}.leg.r{left:50px;transform:rotate(-8deg)}
+.enemy{position:absolute;bottom:68px;right:17%;width:100px;height:145px;filter:drop-shadow(0 0 12px #ff5367);transition:transform .18s}
+.ehead{position:absolute;top:0;left:30px;width:42px;height:40px;background:#a8d8ff;border-radius:45%;border:3px solid #d7f4ff}
+.ears{position:absolute;top:-8px;left:20px;width:65px;height:35px;background:#9ee8ff;clip-path:polygon(0 100%,15% 0,38% 55%,55% 0,100% 100%)}
+.ebody{position:absolute;top:40px;left:24px;width:55px;height:75px;background:linear-gradient(90deg,#273c91,#596fff);clip-path:polygon(20% 0,80% 0,100% 100%,0 100%)}
+.elimb{position:absolute;top:53px;width:20px;height:62px;background:#a8d8ff;border-radius:12px}.elimb.l{left:7px}.elimb.r{right:2px}
+.eleg{position:absolute;top:106px;width:23px;height:40px;background:#263a87;border-radius:8px}.eleg.l{left:25px}.eleg.r{left:54px}
+.name{position:absolute;top:10px;font-weight:900;text-shadow:0 2px 5px #000}.name.you{left:16px}.name.foe{right:16px}
+.bars{position:absolute;top:37px;left:16px;right:16px;display:flex;justify-content:space-between;gap:20px}.barbox{width:42%}.barlabel{font-size:11px;font-weight:800;margin-bottom:4px}.bar{height:12px;background:#101729;border:1px solid #fff8;border-radius:20px;overflow:hidden}.fill{height:100%;width:100%;background:linear-gradient(90deg,#39e58a,#b5ff7a);transition:width .25s}.fill.enemyhp{background:linear-gradient(90deg,#ff526c,#ffad65)}.ki{height:7px;margin-top:4px}.ki .fill{background:linear-gradient(90deg,#31caff,#9b8cff)}
+.status{text-align:center;color:#e3edff;font-size:13px;margin:13px 0 8px;min-height:20px}
+.stats{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:10px 0}.stats span{background:#172440;border:1px solid #40547c;padding:7px 12px;border-radius:12px;font-size:13px}
+.controls{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}.btn{border:0;border-radius:14px;padding:14px 10px;font-weight:900;font-size:15px;color:#10182b;background:linear-gradient(135deg,#ffe58b,#ffad39);box-shadow:0 5px 0 #9a5b19;cursor:pointer;touch-action:manipulation}.btn:active{transform:translateY(3px);box-shadow:0 2px 0 #9a5b19}.btn.blue{background:linear-gradient(135deg,#a4f5ff,#42b9ff);box-shadow:0 5px 0 #176caa}.btn.purple{background:linear-gradient(135deg,#e4baff,#a879ff);box-shadow:0 5px 0 #6243a2}.btn.dark{background:linear-gradient(135deg,#cbd5e8,#8293b7);box-shadow:0 5px 0 #465574}
+.bottom{display:flex;gap:10px;margin-top:12px}.bottom .btn{flex:1;font-size:13px;padding:11px 6px}
+.log{margin-top:14px;background:#0e1730;border:1px solid #34496f;border-radius:16px;padding:12px;min-height:64px;font-size:13px;color:#c9d8f6}.log strong{color:var(--gold)}
+.overlay{position:absolute;inset:0;background:#070b18dd;display:none;align-items:center;justify-content:center;text-align:center;padding:25px;z-index:4}.overlay.show{display:flex}.modal{max-width:420px}.modal h2{color:var(--gold);font-size:30px;margin:0 0 8px}.modal p{color:#d5e1ff;line-height:1.5}
+@media(min-width:650px){.controls{grid-template-columns:repeat(4,1fr)}.arena{height:390px}.fighter{transform:scale(1.15);transform-origin:bottom left}.enemy{transform:scale(1.15);transform-origin:bottom right}}
+</style>
+</head>
+<body><div class="wrap">
+<header class="top"><div class="logo">🐉 DRAGON ASCENSION</div><div class="pill" id="stage">STAGE 1 · ROOKIE</div></header>
+<div class="arena" id="arena">
+<div class="sun"></div><div class="mountain m1"></div><div class="mountain m2"></div><div class="ground"></div>
+<div class="name you">YOU</div><div class="name foe" id="foename">SAIBAMAN</div>
+<div class="bars"><div class="barbox"><div class="barlabel">YOUR HP <span id="hpnum">100</span></div><div class="bar"><div class="fill" id="hpbar"></div></div><div class="bar ki"><div class="fill" id="kibar"></div></div></div><div class="barbox"><div class="barlabel" style="text-align:right">ENEMY HP <span id="ehpnum">70</span></div><div class="bar"><div class="fill enemyhp" id="ehpbar"></div></div></div></div>
+<div class="fighter" id="fighter"><div class="head"></div><div class="hair"></div><div class="body"></div><div class="arm l"></div><div class="arm r"></div><div class="leg l"></div><div class="leg r"></div></div>
+<div class="enemy" id="enemy"><div class="ehead"></div><div class="ears"></div><div class="ebody"></div><div class="elimb l"></div><div class="elimb r"></div><div class="eleg l"></div><div class="eleg r"></div></div>
+<div class="overlay" id="overlay"><div class="modal"><h2 id="overTitle">VICTORY!</h2><p id="overText">You defeated your rival.</p><button class="btn" id="nextBtn">NEXT BATTLE</button></div></div>
+</div>
+<div class="status" id="status">A challenger approaches. Choose your move!</div>
+<div class="stats"><span>⚡ Ki: <b id="kinum">50</b>/100</span><span>⭐ Power: <b id="power">1</b></span><span>🏆 Wins: <b id="wins">0</b></span></div>
+<div class="controls">
+<button class="btn" id="strike">👊 STRIKE</button>
+<button class="btn blue" id="blast">💥 KI BLAST · 20</button>
+<button class="btn purple" id="charge">⚡ CHARGE KI</button>
+<button class="btn dark" id="guard">🛡️ GUARD</button>
+</div>
+<div class="bottom"><button class="btn dark" id="transform">🔥 TRANSFORM</button><button class="btn dark" id="restart">↻ RESTART</button></div>
+<div class="log" id="log"><strong>Battle log:</strong> Your journey begins. Defeat enemies, earn power, and unlock transformations.</div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+let hp=100,ki=50,ehp=70,enemyMax=70,stage=1,wins=0,power=1,guarding=false,locked=false,transformed=false;
+const enemies=[["SAIBAMAN",70],["RADITZ",100],["NAPPА",135],["VEGETA",175],["FRIEZA",220],["CELL",270],["MAJIN BUU",330],["BROLY",420]];
+function say(s){$("status").textContent=s;$("log").innerHTML="<strong>Battle log:</strong> "+s}
+function update(){
+$("hpnum").textContent=hp;$("ehpnum").textContent=ehp;$("kinum").textContent=ki;$("power").textContent=power;$("wins").textContent=wins;
+$("hpbar").style.width=Math.max(0,hp)+"%";$("kibar").style.width=ki+"%";$("ehpbar").style.width=Math.max(0,ehp/enemyMax*100)+"%";
+$("stage").textContent="STAGE "+stage+" · "+(stage<3?"ROOKIE":stage<6?"WARRIOR":"LEGEND");
+$("foename").textContent=enemies[Math.min(stage-1,enemies.length-1)][0];
+}
+function animate(id,transform){$(id).style.transform=transform;setTimeout(()=>$(id).style.transform="",180)}
+function enemyTurn(){
+if(ehp<=0||hp<=0)return;
+let damage=8+stage*3+Math.floor(Math.random()*6);if(guarding){damage=Math.max(2,Math.floor(damage*.3));guarding=false;say("You block most of the counterattack!");}else say(enemies[Math.min(stage-1,7)][0]+" hits you for "+damage+" damage!");
+hp=Math.max(0,hp-damage);animate("enemy","translateX(-12px)");update();if(hp<=0)finish(false);
+}
+function playerAction(fn){if(locked||hp<=0||ehp<=0)return;fn();update();if(ehp<=0){finish(true);return;}setTimeout(enemyTurn,550)}
+function finish(win){locked=true;if(win){wins++;power++;$("overTitle").textContent="VICTORY!";$("overText").textContent="You defeated "+enemies[Math.min(stage-1,7)][0]+". Your power increased!";$("nextBtn").textContent=stage>=8?"PLAY AGAIN":"NEXT BATTLE";}else{$("overTitle").textContent="DEFEATED";$("overText").textContent="Your energy ran out. Train and try again!";$("nextBtn").textContent="TRY AGAIN";} $("overlay").classList.add("show");update();}
+$("strike").onclick=()=>playerAction(()=>{let d=10+power*4+Math.floor(Math.random()*7);ehp=Math.max(0,ehp-d);animate("fighter","translateX(28px)");say("Your combo strike deals "+d+" damage!");});
+$("blast").onclick=()=>playerAction(()=>{if(ki<20){say("Not enough Ki! Charge first.");return;}ki-=20;let d=22+power*6;ehp=Math.max(0,ehp-d);animate("fighter","translateX(18px) scale(1.08)");say("KAMEHAMEHA! Your Ki blast deals "+d+" damage!");});
+$("charge").onclick=()=>playerAction(()=>{let n=25+Math.floor(Math.random()*11);ki=Math.min(100,ki+n);say("You focus your energy and recover "+n+" Ki.");});
+$("guard").onclick=()=>playerAction(()=>{guarding=true;say("You take a defensive stance. Incoming damage reduced!");});
+$("transform").onclick=()=>{if(locked||transformed||ki<50||hp<=0)return say("Need 50 Ki and an unused transformation this battle.");ki-=50;power+=2;transformed=true;say("YOUR AURA EXPLODES! TRANSFORMATION UNLOCKED — power boosted!");$("fighter").style.filter="drop-shadow(0 0 22px #55e8ff)";update();};
+$("nextBtn").onclick=()=>{if(hp<=0){restart();return;}stage=stage>=8?1:stage+1;let e=enemies[stage-1];enemyMax=e[1];ehp=enemyMax;hp=Math.min(100,hp+30);ki=Math.min(100,ki+25);transformed=false;locked=false;$("fighter").style.filter="drop-shadow(0 0 10px #ffbf3f)";$("overlay").classList.remove("show");say("A new rival appears: "+e[0]+". Get ready!");update();};
+function restart(){hp=100;ki=50;ehp=70;enemyMax=70;stage=1;wins=0;power=1;locked=false;guarding=false;transformed=false;$("overlay").classList.remove("show");$("fighter").style.filter="drop-shadow(0 0 10px #ffbf3f)";say("Fresh start! Your training begins again.");update();}
+$("restart").onclick=restart;update();
+</script></body></html>
